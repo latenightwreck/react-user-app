@@ -10,6 +10,8 @@ export default function AddUser(props) {
   const addUserEventHandler = (event) => {
     event.preventDefault();
     console.log(enteredUsername, enteredAge);
+    setEnteredUsername('');
+    setEnteredAge('');
   };
 
   const usernameChangeHandler = (event) => {
@@ -24,9 +26,20 @@ export default function AddUser(props) {
     <Card className={classes.input}>
       <form onSubmit={addUserEventHandler}>
         <label htmlFor='name'>Name</label>
-        <input id='name' type='text' onChange={usernameChangeHandler} />
+        <input
+          id='name'
+          type='text'
+          value={enteredUsername}
+          onChange={usernameChangeHandler}
+        />
         <label htmlFor='age'>Age</label>
-        <input id='age' type='number' min='0' onChange={ageChangeHandler} />
+        <input
+          id='age'
+          type='number'
+          min='0'
+          value={enteredAge}
+          onChange={ageChangeHandler}
+        />
         <Button type='submit'>Submit</Button>
         {/* <button type='submit'>Submit</button> */}
       </form>
