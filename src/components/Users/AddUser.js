@@ -16,6 +16,7 @@ export default function AddUser(props) {
       return;
     }
     const userData = {
+      id: Math.random().toString(),
       name: enteredUsername,
       age: enteredAge,
     };
