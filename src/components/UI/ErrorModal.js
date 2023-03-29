@@ -7,7 +7,7 @@ export default function ErrorModal(props) {
   return (
     <>
       {ReactDOM.createPortal(
-        <Backdrop onClick={props.onHandleError} />,
+        <Backdrop onHandleError={props.onHandleError} />,
         document.getElementById('backdrop-root')
       )}
       {ReactDOM.createPortal(
