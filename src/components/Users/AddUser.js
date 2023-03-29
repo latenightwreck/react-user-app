@@ -15,7 +15,12 @@ export default function AddUser(props) {
     if (+enteredAge < 1) {
       return;
     }
-    console.log(enteredUsername, enteredAge);
+    const userData = {
+      name: enteredUsername,
+      age: enteredAge,
+    };
+
+    props.onAddUser(userData);
     setEnteredUsername('');
     setEnteredAge('');
   };
