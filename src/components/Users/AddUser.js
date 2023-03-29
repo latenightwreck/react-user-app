@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Wrapper from '../Helpers/Wrapper';
 import Button from '../UI/Button';
 import Card from '../UI/Card';
@@ -6,13 +6,17 @@ import ErrorModal from '../UI/ErrorModal';
 import classes from './AddUser.module.css';
 
 export default function AddUser(props) {
-  const [enteredUsername, setEnteredUsername] = useState('');
-  const [enteredAge, setEnteredAge] = useState('');
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
+
   const [error, setError] = useState();
 
   const addUserEventHandler = (event) => {
     event.preventDefault();
-    if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
+    const enteredName = nameInputRef.current.value;
+    const enteredAge = ageInputRef.current.value;
+
+    if (enteredName.trim().length === 0 || enteredAge.trim().length === 0) {
       setError({
         title: 'Required Data Missing',
         message: 'Please make sure that Name and Age are filled.',
@@ -28,21 +32,13 @@ export default function AddUser(props) {
     }
     const userData = {
       id: Math.random().toString(),
-      name: enteredUsername,
+      name: enteredName,
       age: enteredAge,
     };
 
     props.onAddUser(userData);
-    setEnteredUsername('');
-    setEnteredAge('');
-  };
-
-  const usernameChangeHandler = (event) => {
-    setEnteredUsername(event.target.value);
-  };
-
-  const ageChangeHandler = (event) => {
-    setEnteredAge(event.target.value);
+    nameInputRef.current.value = '';
+    ageInputRef.current.value = '';
   };
 
   const errorHandler = () => {
@@ -61,20 +57,9 @@ export default function AddUser(props) {
       <Card className={classes.input}>
         <form onSubmit={addUserEventHandler}>
           <label htmlFor='name'>Name</label>
-          <input
-            id='name'
-            type='text'
-            value={enteredUsername}
-            onChange={usernameChangeHandler}
-          />
+          <input id='name' type='text' ref={nameInputRef} />
           <label htmlFor='age'>Age</label>
-          <input
-            id='age'
-            type='number'
-            min='0'
-            value={enteredAge}
-            onChange={ageChangeHandler}
-          />
+          <input id='age' type='number' min='0' ref={ageInputRef} />
           <Button type='submit'>Submit</Button>
           {/* <button type='submit'>Submit</button> */}
         </form>
